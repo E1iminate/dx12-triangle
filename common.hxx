@@ -17,5 +17,12 @@
 #pragma once
 
 #include <Windows.h>
+#include <exception>
 
-void ErrorExitFromThisHell(LPCWSTR lpszFunction);
+void ErrorExit(LPCWSTR lpszFunction);
+
+inline void ThrowIfFailed(HRESULT result)
+{
+  if (FAILED(result))
+    throw std::exception();
+}

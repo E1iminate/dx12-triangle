@@ -24,6 +24,10 @@ struct Window
 public:
     Window(const std::wstring& name, size_t width, size_t height);
     void Run();
+    HWND GetHandle() const { return mHandle; }
+    size_t GetWidth() const { return mWidth; }
+    size_t GetHeight() const { return mHeight; }
+
 private:
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

@@ -15,10 +15,14 @@
 *************************************************************************/
 
 #include "window.hxx"
+#include "pipeline.hxx"
 
 int WINAPI main()
 {
   Window window(L"MainWindow", 800, 600);
+  Pipeline pipeline(window);
+  pipeline.InitializeAssets();
+
   window.Run();
 
   return 0;

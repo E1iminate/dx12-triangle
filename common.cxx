@@ -19,7 +19,7 @@
 #include <strsafe.h>
 
 //https://learn.microsoft.com/en-us/windows/win32/debug/retrieving-the-last-error-code
-void ErrorExitFromThisHell(LPCWSTR lpszFunction)
+void ErrorExit(LPCWSTR lpszFunction)
 {
   // Retrieve the system error message for the last-error code
 

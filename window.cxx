@@ -30,7 +30,7 @@ Window::Window(const std::wstring& name, size_t width, size_t height)
   RegisterClassW(&wc);
   mHandle = CreateWindowW(mClassName.c_str(), mName.c_str(), WS_BORDER | WS_CAPTION, CW_USEDEFAULT, CW_USEDEFAULT, mWidth, mHeight, NULL, NULL, NULL, NULL);
   if (!mHandle)
-    ErrorExitFromThisHell(__FUNCTIONW__);
+    ErrorExit(__FUNCTIONW__);
 }
 
 void Window::Run()

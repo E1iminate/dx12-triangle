@@ -8,11 +8,13 @@ set(SOURCES
     common.cxx
     window.cxx
     main.cxx
+    pipeline.hxx
 )
 
 set(HEADERS
     common.hxx
     window.hxx
+    pipeline.cxx
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
