@@ -88,19 +88,19 @@ void Pipeline::InitializeAssets()
   ThrowIfFailed(D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, signature.put(), error.put()));
   ThrowIfFailed(mDevice->CreateRootSignature(0u, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(mRootSignature.put())));
 
-  D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
-  graphicsPipelineStateDesc.pRootSignature = mRootSignature.get();
-  graphicsPipelineStateDesc.RasterizerState.FillMode = D3D12_FILL_MODE::D3D12_FILL_MODE_SOLID;
-  graphicsPipelineStateDesc.RasterizerState.CullMode = D3D12_CULL_MODE::D3D12_CULL_MODE_NONE;
-
-  ThrowIfFailed(mDevice->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(mGraphicsPipelineState.put())));
-
   ThrowIfFailed(mDevice->CreateCommandList1(0,
     D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT,
     D3D12_COMMAND_LIST_FLAGS::D3D12_COMMAND_LIST_FLAG_NONE,
     IID_PPV_ARGS(mGraphicsCommandList.put())));
 
+  ThrowIfFailed(mGraphicsCommandList->Reset(mCommandAllocator.get(), nullptr));
+
   FLOAT colorRGBA[4] = {1.f, 0.f, 0.f, 1.f};
   mGraphicsCommandList->ClearRenderTargetView(mDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), colorRGBA, 0, nullptr);
   mGraphicsCommandList->Close();
+
+  ID3D12CommandList* lists[] = {mGraphicsCommandList.get()};
+  mCommandQueue->ExecuteCommandLists(_countof(lists), lists);
+
+  ThrowIfFailed(mSwapChain->Present(1, 0));
 }
